@@ -1,55 +1,42 @@
 import { Link, NavLink } from "react-router";
 import { FaBars } from "react-icons/fa";
+import { useEffect, useState } from "react";
 import useAuth from "../../hooks/useAuth";
+import "animate.css";
 
 const Navbar = () => {
   const { user, logoutUser } = useAuth();
+  const [isSticky, setIsSticky] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsSticky(window.scrollY > 80);
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   const navLinks = (
     <>
-      <NavLink
-        to="/"
-        className={({ isActive }) =>
-          `px-3 py-2 rounded-md text-sm font-medium ${
-            isActive ? "text-primary font-semibold" : "hover:text-primary"
-          }`
-        }
-      >
-        Home
-      </NavLink>
-
-      <NavLink
-        to="/services"
-        className={({ isActive }) =>
-          `px-3 py-2 rounded-md text-sm font-medium ${
-            isActive ? "text-primary font-semibold" : "hover:text-primary"
-          }`
-        }
-      >
-        Services
-      </NavLink>
-
-      <NavLink
-        to="/about"
-        className={({ isActive }) =>
-          `px-3 py-2 rounded-md text-sm font-medium ${
-            isActive ? "text-primary font-semibold" : "hover:text-primary"
-          }`
-        }
-      >
-        About
-      </NavLink>
-
-      <NavLink
-        to="/contact"
-        className={({ isActive }) =>
-          `px-3 py-2 rounded-md text-sm font-medium ${
-            isActive ? "text-primary font-semibold" : "hover:text-primary"
-          }`
-        }
-      >
-        Contact
-      </NavLink>
+      {["/", "/services", "/about", "/contact"].map((path, i) => {
+        const names = ["Home", "Services", "About", "Contact"];
+        return (
+          <NavLink
+            key={path}
+            to={path}
+            className={({ isActive }) =>
+              `px-3 py-2 rounded-md text-sm font-medium transition ${
+                isActive
+                  ? "text-primary font-semibold"
+                  : "hover:text-primary"
+              }`
+            }
+          >
+            {names[i]}
+          </NavLink>
+        );
+      })}
 
       {user && (
         <NavLink
@@ -67,7 +54,16 @@ const Navbar = () => {
   );
 
   return (
-    <nav className="bg-base-100 shadow-md sticky top-0 z-50">
+    <nav
+      className={`
+        w-full z-50 transition-all duration-300
+        ${
+          isSticky
+            ? "fixed top-0 bg-base-100 shadow-lg animate__animated animate__fadeInDown"
+            : "relative bg-transparent"
+        }
+      `}
+    >
       <div className="container mx-auto px-4">
         <div className="flex justify-between items-center h-16">
           {/* Logo */}
@@ -80,12 +76,15 @@ const Navbar = () => {
             {navLinks}
 
             {user ? (
-              <button onClick={logoutUser} className="btn btn-sm btn-outline">
+              <button
+                onClick={logoutUser}
+                className="btn btn-sm btn-outline ml-2"
+              >
                 Logout
               </button>
             ) : (
               <>
-                <NavLink to="/login" className="btn btn-sm btn-ghost">
+                <NavLink to="/login" className="btn btn-sm btn-ghost ml-2">
                   Login
                 </NavLink>
                 <NavLink to="/register" className="btn btn-sm btn-primary">
@@ -100,10 +99,9 @@ const Navbar = () => {
             <label tabIndex={0} className="btn btn-ghost">
               <FaBars size={20} />
             </label>
-
             <ul
               tabIndex={0}
-              className="menu menu-sm dropdown-content mt-3 z-[1] p-4 shadow bg-base-100 rounded-box w-52 space-y-2"
+              className="menu menu-sm dropdown-content mt-3 z-1 p-4 shadow bg-base-100 rounded-box w-52 space-y-2"
             >
               {navLinks}
 
