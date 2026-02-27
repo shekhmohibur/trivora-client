@@ -1,5 +1,5 @@
 import { useForm } from "react-hook-form";
-import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router";
 import useAuth from "../hooks/useAuth";
 
 const Login = () => {
@@ -7,10 +7,10 @@ const Login = () => {
   const navigate = useNavigate();
   const { register, handleSubmit } = useForm();
 
-  const onSubmit = data => {
+  const onSubmit = (data) => {
     loginUser(data.email, data.password)
       .then(() => navigate("/dashboard"))
-      .catch(err => alert(err.message));
+      .catch((err) => alert(err.message));
   };
 
   return (
