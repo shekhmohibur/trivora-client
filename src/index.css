@@ -1,7 +1,106 @@
 @import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700&display=swap");
+
 @import "tailwindcss";
 @plugin "daisyui";
-@theme {
-  --font-inter: "Inter", ui-sans-serif, system-ui, sans-serif;
-  --font-display: "Outfit", sans-serif;
+
+/* =========================
+   🎨 THEME VARIABLES
+========================= */
+:root {
+  /* 🌤 Light Theme (Soft) */
+  --bg: #F5F7FA;
+  --surface: #FFFFFF;
+  --surface-soft: #F9FAFB;
+
+  --text-primary: #1F2937;
+  --text-secondary: #6B7280;
+
+  --border: #E5E7EB;
+
+  --accent: #38BDF8;
+  --accent-soft: #E0F2FE;
+
+  --shadow: 0 10px 30px rgba(0,0,0,0.06);
+}
+
+/* 🌙 Dark Theme (Soft, not pure black) */
+.dark {
+  --bg: #0F172A; /* soft navy */
+  --surface: #1E293B;
+  --surface-soft: #1F2937;
+
+  --text-primary: #E5E7EB;
+  --text-secondary: #9CA3AF;
+
+  --border: #374151;
+
+  --accent: #38BDF8;
+  --accent-soft: #0C4A6E;
+
+  --shadow: 0 10px 30px rgba(0,0,0,0.4);
+}
+
+/* =========================
+   🌍 GLOBAL BASE STYLES
+========================= */
+html {
+  transition: background-color 0.3s, color 0.3s;
+}
+
+body {
+  background-color: var(--bg);
+  color: var(--text-primary);
+  font-family: var(--font-inter);
+}
+
+/* =========================
+   🧱 REUSABLE UTILITIES
+========================= */
+
+/* Card / container */
+.ui-surface {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow);
+  border-radius: 1rem;
+}
+
+/* Soft surface (glass style) */
+.ui-surface-soft {
+  background: var(--surface-soft);
+  border: 1px solid var(--border);
+}
+
+/* Text */
+.ui-text-secondary {
+  color: var(--text-secondary);
+}
+
+/* Accent */
+.ui-accent {
+  color: var(--accent);
+}
+
+.ui-accent-bg {
+  background: var(--accent-soft);
+}
+
+/* Button feel */
+.ui-hover {
+  transition: all 0.25s ease;
+}
+.ui-hover:hover {
+  background: var(--surface-soft);
+}
+
+/* =========================
+   ✨ SCROLLBAR (optional but pro)
+========================= */
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--border);
+  border-radius: 10px;
 }
